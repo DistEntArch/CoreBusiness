@@ -8,7 +8,7 @@ The purpose of the Core Business Engine is to provide all interfaces for human a
 
 ## Usage
 
-Based on an existing Core Business Model (see:[CBM/README.md](/DistEntArch/CoreBusiness/blob/main/Model/README.md))  provided by the business stakeholder itself, the generator creates a configuration to run  the engine.
+Based on an existing Core Business Model (see:[CBM/README.md](../../../Model/README.md))  provided by the business stakeholder itself, the generator creates a configuration to run  the engine.
 
 Generate the configuration:
 
