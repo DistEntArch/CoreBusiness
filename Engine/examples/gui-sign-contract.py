@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field
 class Input(BaseModel):
     sign_contract: bool = Field(
         False,
-        description="Whether or not to use sampling ; use greedy decoding otherwise.",
+        description="Please check this box if you like to sign this contract.",
     )
 
 class Output(BaseModel):
