@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<cbm:root xmlns:cbm="https://github.com/DistEntArch/CoreBusiness/Model">
-    
+<cbm:root xmlns:cbm="https://github.com/DistEntArch/CoreBusiness/Model"  xmlns:cbe="https://github.com/DistEntArch/CoreBusiness/Engine">
+    <cbm:business-objects>
+        <cbm:business-object id="person">
+            <cbm:state id="virtual">
+                <cbm:following-state target="potential" triggered-by-subject="a person" triggered-by-predicat="accept" triggered-by-object="offer"/>
+            </cbm:state>
+            <cbm:state id="potential">
+                <cbm:following-state target="real" triggered-by-subject="a person" triggered-by-predicat="sign" triggered-by-object="contract"/>
+            </cbm:state>
+        </cbm:business-object>
+    </cbm:business-objects>
 </cbm:root>
