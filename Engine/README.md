@@ -7,6 +7,7 @@ Generate the configuration:
 
 ```
 # assuming we're are in the root directory of the Core Business repo
+
 SAXON_JAR="~/Development/SaxonHE9-8-0-15J/saxon9he.jar"
 CBE_CONFIG="./Model/CatInsurance.xml"
 
