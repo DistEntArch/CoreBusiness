@@ -8,7 +8,11 @@ Generate the configuration:
 ```
 # assuming we're are in the root directory of the Core Business repo
 
+CBM_NAME="CatInsurance"
 SAXON_JAR="~/Development/SaxonHE9-8-0-15J/saxon9he.jar"
-CBE_CONFIG="./Model/CatInsurance.xml"
+CBE_CONFIG="./Model/examples/${CBM_NAME}.xml"
+CBE_GENERATOR="./Engine/XSLT/generate-opyrator.xslt"
+CBE_OUTPUT="./Engine/examples/"
 
+java -jar $SAXON_JAR --param output-dir=$CBE_OUTPUT $CBE_CONFIG $CBE_GENERATOR
 ```
