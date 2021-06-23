@@ -26,7 +26,9 @@ class Input(BaseModel):
             <xsl:value-of select="concat(@triggered-by-predicat,'_',@triggered-by-object)"/>
  <xsl:text><![CDATA[: bool = Field(
         False,
-        description="Whether or not to use sampling ; use greedy decoding otherwise.",
+        description="]]></xsl:text>
+            <xsl:value-of select="@description"/>
+ <xsl:text><![CDATA[",
     )
 
 class Output(BaseModel):

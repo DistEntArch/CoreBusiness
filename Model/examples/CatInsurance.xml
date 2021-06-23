@@ -3,10 +3,13 @@
     <cbm:business-objects>
         <cbm:business-object id="person">
             <cbm:state id="virtual">
-                <cbm:following-state target="potential" triggered-by-subject="a person" triggered-by-predicat="accept" triggered-by-object="offer"/>
+                <cbm:following-state target="potential" triggered-by-subject="a person" triggered-by-predicat="accept" triggered-by-object="offer" description="Please check this box if you like to receive an offer from us."/>
             </cbm:state>
             <cbm:state id="potential">
-                <cbm:following-state target="real" triggered-by-subject="a person" triggered-by-predicat="sign" triggered-by-object="contract"/>
+                <cbm:following-state target="real" triggered-by-subject="a person" triggered-by-predicat="sign" triggered-by-object="contract" description="Please check this box if you like to sign this contract."/>
+            </cbm:state>
+            <cbm:state id="real">
+                <cbm:following-state target="virtual" triggered-by-subject="a person" triggered-by-predicat="cancel" triggered-by-object="contract" description="Please check this box if you like to cancel this contract."/>
             </cbm:state>
         </cbm:business-object>
     </cbm:business-objects>
