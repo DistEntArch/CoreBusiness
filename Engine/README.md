@@ -1,7 +1,14 @@
 # Core Business Engine
 The purpose of the Core Business Engine is to provide all interfaces for human actors and (dummy) APIs as proxies for capabilities provided by external systems.
 
-Based on an existing Core Business Model provided by the business stakeholder itself, the generator creates a configuration to run  the engine.
+### Dependencies
+
+- [Saxon XSLT processor](https://www.saxonica.com/welcome/welcome.xml)
+- [opyrator](https://github.com/ml-tooling/opyrator)
+
+## Usage
+
+Based on an existing Core Business Model (see:[CBM/README.md](../../../Model/README.md))  provided by the business stakeholder itself, the generator creates a configuration to run  the engine.
 
 Generate the configuration:
 
