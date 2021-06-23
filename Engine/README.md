@@ -17,4 +17,9 @@ CBE_OUTPUT="./Engine/examples/"
 java -jar "${SAXON_JAR}" output-dir=$CBE_OUTPUT $CBE_CONFIG $CBE_GENERATOR
 ```
 
-The engine generator will create a number of python files in the given CBE_OUTPUT directory and a shell script to start the opyrator services.  
+The engine generator will create a number of python files in the given CBE_OUTPUT directory and a shell script to start the opyrator services. It also writes a protocol to stdout.
+
+```
+Generate opyrator code in './Engine/examples/'.
+To start the engine run "sh ./Engine/examples/run-cbe.sh"
+```  
