@@ -8,7 +8,7 @@
                 </cbm:following-state>
             </cbm:state>
             <cbm:state id="potential">
-                <cbm:following-state target="real" triggered-by-state-change="product-potential-to-real"/>
+                <cbm:following-state target="real" triggered-by-state-change-of="product" triggered-by-state-change-from="potential" triggered-by-state-change-to="real"/>
             </cbm:state>
             <cbm:state id="real">
                 <cbm:following-state target="virtual" triggered-by-subject="a person" triggered-by-predicat="cancel" triggered-by-object="contract" description="Please check this box if you like to cancel this contract."/>
@@ -25,7 +25,7 @@
         </cbm:business-object>
         <cbm:business-object id="risk">
             <cbm:state id="virtual">
-                <cbm:following-state target="potential" triggered-by-state-change-of="product" from="potential" to="real"/>
+                <cbm:following-state target="potential" triggered-by-state-change-of="product" triggered-by-state-change-from="potential" triggered-by-state-change-to="real"/>
             </cbm:state>
             <cbm:state id="potential">
                 <cbm:following-state target="real" triggered-by-subject="a person" triggered-by-predicat="file" triggered-by-object="claim" description="Please check this box if you like to file a claim."/>

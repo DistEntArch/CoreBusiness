@@ -50,6 +50,11 @@ def ]]></xsl:text><xsl:value-of select="concat($triggered-by-predicat,'_',$trigg
             <xsl:value-of select="cb:write-opyrator-code(@triggered-by-predicat,@triggered-by-object,@description)"/>
         </xsl:result-document>
     </xsl:template>
+    <xsl:template match="cbm:following-state[@triggered-by-state-change-of]" mode="write-opyrator-python">
+        <xsl:result-document format="python" href="{concat($output-dir,'/api-',@triggered-by-state-change-of,'-',@triggered-by-state-change-from,'-',@triggered-by-state-change-to,'.py')}">
+            <xsl:value-of select="cb:write-opyrator-code(@triggered-by-state-change-of,concat(@triggered-by-state-change-from,'_',@triggered-by-state-change-to),@description)"/>
+        </xsl:result-document>
+    </xsl:template>
     <xsl:template match="/cbm:root" mode="write-opyrator-shell">
         <xsl:message select="name()"> AAAA</xsl:message>
         <xsl:result-document format="python" href="{concat($output-dir,'/run-cbe.sh')}">
@@ -61,7 +66,7 @@ def ]]></xsl:text><xsl:value-of select="concat($triggered-by-predicat,'_',$trigg
             <xsl:text>echo "To stop all running engines execute 'sh </xsl:text><xsl:value-of select="$output-dir"/><xsl:text>stop-cbe.sh'."&#10;</xsl:text>
         </xsl:result-document>
     </xsl:template>
-    <xsl:template match="cbm:following-state[not(@triggered-by-state-change)]" mode="write-opyrator-shell">
+    <xsl:template match="cbm:following-state[not(@triggered-by-state-change-of)]" mode="write-opyrator-shell">
         <xsl:text>opyrator launch-ui </xsl:text>
         <xsl:value-of select="concat('ui-',@triggered-by-predicat,'-',@triggered-by-object)"/>
         <xsl:text>:</xsl:text>
@@ -70,11 +75,11 @@ def ]]></xsl:text><xsl:value-of select="concat($triggered-by-predicat,'_',$trigg
         <xsl:value-of select="8080 + count(preceding::cbm:following-state)"/>
         <xsl:text> &amp; &#10;sleep 2 &#10;</xsl:text>
     </xsl:template>
-    <xsl:template match="cbm:following-state[@triggered-by-state-change]" mode="write-opyrator-shell">
+    <xsl:template match="cbm:following-state[@triggered-by-state-change-of]" mode="write-opyrator-shell">
         <xsl:text>opyrator launch-api </xsl:text>
-        <xsl:value-of select="concat('api-',@triggered-by-predicat,'-',@triggered-by-object)"/>
+        <xsl:value-of select="concat('api-',@triggered-by-state-change-of,'-',@triggered-by-state-change-from,'-',@triggered-by-state-change-to)"/>
         <xsl:text>:</xsl:text>
-        <xsl:value-of select="concat(@triggered-by-predicat,'_',@triggered-by-object)"/>
+        <xsl:value-of select="concat(@triggered-by-state-change-of,'_',@triggered-by-state-change-from,'_',@triggered-by-state-change-to)"/>
         <xsl:text> --port </xsl:text>
         <xsl:value-of select="8080 + count(preceding::cbm:following-state)"/>
         <xsl:text> &amp; &#10;sleep 2 &#10;</xsl:text>
