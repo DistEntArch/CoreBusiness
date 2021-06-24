@@ -3,13 +3,35 @@
     <cbm:business-objects>
         <cbm:business-object id="person">
             <cbm:state id="virtual">
-                <cbm:following-state target="potential" triggered-by-subject="a person" triggered-by-predicat="accept" triggered-by-object="offer" description="Please check this box if you like to receive an offer from us."/>
+                <cbm:following-state target="potential" triggered-by-subject="a person" triggered-by-predicat="accept" triggered-by-object="offer" description="Please check this box if you like to receive an offer from us.">
+                    <cbm:triggers></cbm:triggers>
+                </cbm:following-state>
             </cbm:state>
             <cbm:state id="potential">
-                <cbm:following-state target="real" triggered-by-subject="a person" triggered-by-predicat="sign" triggered-by-object="contract" description="Please check this box if you like to sign this contract."/>
+                <cbm:following-state target="real" triggered-by-state-change="product-potential-to-real"/>
             </cbm:state>
             <cbm:state id="real">
                 <cbm:following-state target="virtual" triggered-by-subject="a person" triggered-by-predicat="cancel" triggered-by-object="contract" description="Please check this box if you like to cancel this contract."/>
+            </cbm:state>
+        </cbm:business-object>
+        <cbm:business-object id="product">
+            <cbm:state id="virtual" description="The definition of the product 'Cat Insurance'">
+                <cbm:following-states target="potential"/>                
+            </cbm:state>
+            <cbm:state id="potential" description="The specific offer of the 'Cat Insurance' to a person based on the product definition.">
+                <cbm:following-state id="product-potential-to-real" target="real" triggered-by-subject="a person" triggered-by-predicat="sign" triggered-by-object="contract" description="Please check this box if you like to sign this contract."/>
+                <cbm:following-state target="virtual" triggered-by-subject="a person" triggered-by-predicat="decline" triggered-by-object="offer" description="Please check this box if you not accept the offer."/>
+            </cbm:state>
+        </cbm:business-object>
+        <cbm:business-object id="risk">
+            <cbm:state id="virtual">
+                <cbm:following-state target="potential" triggered-by-state-change-of="product" from="potential" to="real"/>
+            </cbm:state>
+            <cbm:state id="potential">
+                <cbm:following-state target="real" triggered-by-subject="a person" triggered-by-predicat="file" triggered-by-object="claim" description="Please check this box if you like to file a claim."/>
+            </cbm:state>
+            <cbm:state id="real">
+                <cbm:following-state target="virtual" triggered-by-subject="the company" triggered-by-predicat="pay" triggered-by-object="claim" description="Please check this box if you like to accept the claim and payout."/>
             </cbm:state>
         </cbm:business-object>
     </cbm:business-objects>
