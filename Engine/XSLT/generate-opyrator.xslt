@@ -41,6 +41,7 @@ def ]]></xsl:text><xsl:value-of select="concat($triggered-by-predicat,'_',$trigg
         <xsl:text>'.&#10;</xsl:text>
         <xsl:apply-templates select=".//cbm:following-state" mode="write-opyrator-python"/>
         <xsl:apply-templates select="self::*" mode="write-opyrator-shell"/>
+        <xsl:apply-templates select="self::*" mode="write-opyrator-overview"/>
         <xsl:text>To start the engine run &quot;sh </xsl:text>
         <xsl:value-of select="$output-dir"/>
         <xsl:text>run-cbe.sh&quot;&#10;</xsl:text>
@@ -51,8 +52,11 @@ def ]]></xsl:text><xsl:value-of select="concat($triggered-by-predicat,'_',$trigg
         </xsl:result-document>
     </xsl:template>
     <xsl:template match="cbm:following-state[@triggered-by-state-change-of]" mode="write-opyrator-python">
-        <xsl:result-document format="python" href="{concat($output-dir,'/api-',@triggered-by-state-change-of,'-',@triggered-by-state-change-from,'-',@triggered-by-state-change-to,'.py')}">
-            <xsl:value-of select="cb:write-opyrator-code(@triggered-by-state-change-of,concat(@triggered-by-state-change-from,'_',@triggered-by-state-change-to),@description)"/>
+        <xsl:result-document format="python" href="{concat($output-dir,'/api-',ancestor-or-self::cbm:business-object[1]/@id,'-',@triggered-by-state-change-of,'-',@triggered-by-state-change-from,'-',@triggered-by-state-change-to,'.py')}">
+            <xsl:value-of select="cb:write-opyrator-code(
+                ancestor-or-self::cbm:business-object[1]/@id,
+                concat(@triggered-by-state-change-of,'_',@triggered-by-state-change-from,'_',@triggered-by-state-change-to),
+                @description)"/>
         </xsl:result-document>
     </xsl:template>
     <xsl:template match="/cbm:root" mode="write-opyrator-shell">
@@ -63,6 +67,19 @@ def ]]></xsl:text><xsl:value-of select="concat($triggered-by-predicat,'_',$trigg
             <xsl:text>&#10;</xsl:text>
             <xsl:apply-templates select=".//cbm:following-state" mode="write-opyrator-shell"/>
             <xsl:text>ps aux | grep "python -m streamlit" | grep -v grep | awk '{print "kill -9 "$2}' > stop-cbe.sh&#10;</xsl:text>
+            <xsl:text>ps aux | grep "opyrator launch-api" | grep -v grep | awk '{print "kill -9 "$2}' >> stop-cbe.sh&#10;</xsl:text>
+            <xsl:text>echo "To stop all running engines execute 'sh </xsl:text><xsl:value-of select="$output-dir"/><xsl:text>stop-cbe.sh'."&#10;</xsl:text>
+        </xsl:result-document>
+    </xsl:template>
+    <xsl:template match="/cbm:root" mode="write-opyrator-overview">
+        <xsl:message select="name()"> AAAA</xsl:message>
+        <xsl:result-document format="python" href="{concat($output-dir,'/run-cbe.sh')}">
+            <xsl:text>cd </xsl:text>
+            <xsl:value-of select="$output-dir"/>
+            <xsl:text>&#10;</xsl:text>
+            <xsl:apply-templates select=".//cbm:following-state" mode="write-opyrator-shell"/>
+            <xsl:text>ps aux | grep "python -m streamlit" | grep -v grep | awk '{print "kill -9 "$2}' > stop-cbe.sh&#10;</xsl:text>
+            <xsl:text>ps aux | grep "opyrator launch-api" | grep -v grep | awk '{print "kill -9 "$2}' >> stop-cbe.sh&#10;</xsl:text>
             <xsl:text>echo "To stop all running engines execute 'sh </xsl:text><xsl:value-of select="$output-dir"/><xsl:text>stop-cbe.sh'."&#10;</xsl:text>
         </xsl:result-document>
     </xsl:template>
@@ -77,9 +94,9 @@ def ]]></xsl:text><xsl:value-of select="concat($triggered-by-predicat,'_',$trigg
     </xsl:template>
     <xsl:template match="cbm:following-state[@triggered-by-state-change-of]" mode="write-opyrator-shell">
         <xsl:text>opyrator launch-api </xsl:text>
-        <xsl:value-of select="concat('api-',@triggered-by-state-change-of,'-',@triggered-by-state-change-from,'-',@triggered-by-state-change-to)"/>
+        <xsl:value-of select="concat('api-',ancestor-or-self::cbm:business-object[1]/@id,'-',@triggered-by-state-change-of,'-',@triggered-by-state-change-from,'-',@triggered-by-state-change-to)"/>
         <xsl:text>:</xsl:text>
-        <xsl:value-of select="concat(@triggered-by-state-change-of,'_',@triggered-by-state-change-from,'_',@triggered-by-state-change-to)"/>
+        <xsl:value-of select="concat(ancestor-or-self::cbm:business-object[1]/@id,'_',@triggered-by-state-change-of,'_',@triggered-by-state-change-from,'_',@triggered-by-state-change-to)"/>
         <xsl:text> --port </xsl:text>
         <xsl:value-of select="8080 + count(preceding::cbm:following-state)"/>
         <xsl:text> &amp; &#10;sleep 2 &#10;</xsl:text>
